@@ -1,4 +1,4 @@
 wedding
 =======
 
-Wedding app for Jacob and Katie
+This is the wedding website for Jacob and Katie (jacobandkatiegetmarried.com).

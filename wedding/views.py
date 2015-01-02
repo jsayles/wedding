@@ -9,4 +9,16 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
 
 def home(request):
-	return render_to_response('home.html',{}, RequestContext(request))
+	return render_to_response('home.html',{'nbar':'home'}, RequestContext(request))
+
+def ceremony(request):
+	return render_to_response('ceremony.html',{'nbar':'ceremony'}, RequestContext(request))
+
+def reception(request):
+	return render_to_response('reception.html',{'nbar':'reception'}, RequestContext(request))
+
+def wv_reception(request):
+	return render_to_response('wv_reception.html',{'nbar':'wv_reception'}, RequestContext(request))
+
+def rsvp(request):
+	return render_to_response('rsvp.html',{'nbar':'rsvp'}, RequestContext(request))

@@ -44,14 +44,8 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Added by me
 *.log
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# SQLite
 wedding.db
+local_settings.py
+

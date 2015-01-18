@@ -61,5 +61,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+AUTH_PROFILE_MODULE = 'wedding.UserProfile'
+
 # Import the local settings file
 from local_settings import *

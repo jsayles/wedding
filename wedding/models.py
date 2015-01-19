@@ -38,6 +38,7 @@ class Invitation(models.Model):
 	thank_you_sent = models.BooleanField(default=False)
 	notes = models.TextField(blank=True, null=True)
 	groups = models.ManyToManyField(InvitationGroup, blank=True)
+	last_viewed = models.DateTimeField(blank=True, null=True, default=None)
 
 	def __unicode__(self):
 		return (self.recipient)

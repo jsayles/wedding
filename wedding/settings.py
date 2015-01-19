@@ -1,6 +1,7 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+path = lambda *a: os.path.join(BASE_DIR, *a)
 
 SECRET_KEY = 'generate-a-new-one-and-put-it-in-your-local-settings-file'
 
@@ -43,6 +44,11 @@ STATICFILES_FINDERS = (
 	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 	'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+MEDIA_ROOT = path('media')
+
+BACKUP_ROOT = path('backups/')
+BACKUP_COUNT = 30
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

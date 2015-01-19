@@ -48,4 +48,5 @@ coverage.xml
 *.log
 wedding.db
 local_settings.py
-
+backups/
+media/

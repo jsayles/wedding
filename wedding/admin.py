@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.conf import settings
 
 from wedding.models import UserProfile, InvitationGroup, Invitation
 
@@ -44,10 +45,24 @@ class InvitationAdmin(admin.ModelAdmin):
 		if self.address_line1 and self.city and self.state and self.zip_code:
 			return True
 		return False;
+	
+	def estimated(self):
+		return self.estimated_ceremony
+		
+	def confirmed(self):
+		if not self.rsvp_ceremony:
+			return ""
+		return self.rsvp_ceremony
+	
+	def code(self):
+		code = self.get_code()
+		url = self.get_url()
+		return '<a href="%s">%s</a>' % (url, code)
+	code.allow_tags = True
 
 	model = Invitation
-	list_display=("recipient", address, "email1")
-	list_filter=("groups", AddressFilter)
+	list_display=("recipient", address, "email1", estimated, confirmed, "last_viewed", code)
+	list_filter=("groups", AddressFilter, 'thank_you_sent', 'mail_invitation', 'check_spelling')
 	search_fields = ('recipient', 'email1')
 
 admin.site.register(Invitation, InvitationAdmin)

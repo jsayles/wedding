@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>RSVP</h1>
-
-<strong>Coming Soon...</strong>
+<div style="font-size: 3em;">
+	<div>{{ invitation.recipient }}</div>
+	{% if invitation.address_line1 %}<div>{{ invitation.address_line1 }}</div>{% endif %}
+	{% if invitation.address_line2 %}<div>{{ invitation.address_line1 }}</div>{% endif %}
+	{% if invitation.city %}<div>{{ invitation.city }}, {{ invitation.state }} {{ invitation.zip_code }}</div>{% endif %}
+</div>
 {% endblock %}

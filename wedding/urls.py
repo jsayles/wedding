@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 urlpatterns = patterns('',
+	url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", content_type="text/plain")),
 	url(r'^$', 'wedding.views.home', name='home'),
 	url(r'^ceremony/', 'wedding.views.ceremony', name='ceremony'),
 	url(r'^wa_reception/', 'wedding.views.reception', name='reception'),

@@ -54,6 +54,13 @@ class InvitationAdmin(admin.ModelAdmin):
 			return ""
 		return self.rsvp_ceremony
 	
+	def group(self):
+		if not self.groups or self.groups.count() == 0:
+			return "None"
+		elif self.groups.count() > 1:
+			return "Multiple"
+		return self.groups.first().name
+
 	def code(self):
 		code = self.get_code()
 		url = self.get_url()
@@ -61,7 +68,7 @@ class InvitationAdmin(admin.ModelAdmin):
 	code.allow_tags = True
 
 	model = Invitation
-	list_display=("recipient", address, "email1", estimated, confirmed, "last_viewed", code)
+	list_display=("recipient", address, "email1", estimated, confirmed, group, "last_viewed", code)
 	list_filter=("groups", AddressFilter, 'thank_you_sent', 'mail_invitation', 'check_spelling')
 	search_fields = ('recipient', 'email1')
 

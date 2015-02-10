@@ -68,8 +68,8 @@ class InvitationAdmin(admin.ModelAdmin):
 	code.allow_tags = True
 
 	model = Invitation
-	list_display=("recipient", address, "email1", estimated, confirmed, group, "last_viewed", code)
-	list_filter=("groups", AddressFilter, 'thank_you_sent', 'mail_invitation', 'check_spelling')
-	search_fields = ('recipient', 'email1')
+	list_display=("recipient", address, "email1", estimated, confirmed, group, "tier", "last_viewed", code)
+	list_filter=("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
+	search_fields = ("recipient", "email1", "email2")
 
 admin.site.register(Invitation, InvitationAdmin)

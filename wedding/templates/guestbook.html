@@ -3,7 +3,11 @@
 {% block content %}
 
 <h3>Sign our Guestbook</h3>
-{% if invitation %}
+{% if new_note %}
+	<div>
+		<p>Thank you!</p>
+	</div>
+{% elif invitation %}
 	<form action="{% url 'wedding.views.guestbook' %}" method="POST">
 		<div class="row ui-widget form-group">
 			<div class="col-sm-8 col-sm-offset-2">

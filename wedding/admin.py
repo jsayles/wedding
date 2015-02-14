@@ -79,7 +79,6 @@ class InvitationAdmin(admin.ModelAdmin):
 	list_filter=("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
 	search_fields = ("recipient", "email1", "email2")
 
-
 class GuestNoteAdmin(admin.ModelAdmin):
 	def approve(self, request, queryset):
 		for note in queryset:

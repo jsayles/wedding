@@ -4,11 +4,13 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
 
+from wedding import email
 from wedding.models import *
 
 def home(request):
@@ -44,14 +46,17 @@ def whoami(request):
 	return HttpResponse("Unknown")
 
 def guestbook(request):
+	new_note = None
 	if "from" in request.POST and "note" in request.POST:
 		from_name = request.POST['from'].strip()
 		note = request.POST['note'].strip()
-		GuestNote.objects.create(from_name=from_name, note=note)
+		new_note = GuestNote.objects.create(from_name=from_name, note=note)
+		# Send an email to announce the new entry
+		email.send_guestbook_entry(new_note)
 		
 	invitation = session_invitation(request)
 	guest_notes = GuestNote.objects.filter(approved=True).order_by('created')
-	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'invitation':invitation}, RequestContext(request))
+	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
 
 def rsvp(request, code=None):
 	if not code and "code" in request.POST:

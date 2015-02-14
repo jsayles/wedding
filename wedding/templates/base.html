@@ -55,6 +55,9 @@
 						<li {% ifequal nbar 'registry' %} class="active" {% endifequal %}><a href="{% url 'registry' %}">Registry</a></li>
 						<li {% ifequal nbar 'guestbook' %} class="active" {% endifequal %}><a href="{% url 'guestbook' %}">Guestbook</a></li>
 						<li {% ifequal nbar 'rsvp' %} class="active" {% endifequal %}><a href="{% url 'rsvp' %}">RSVP</a></li>
+						{% if request.user.is_staff %}
+							<li><a href="{% url 'admin:index' %}">Admin</a></li>
+						{% endif %}
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>

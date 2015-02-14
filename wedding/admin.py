@@ -4,7 +4,15 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.conf import settings
 
-from wedding.models import UserProfile, InvitationGroup, Invitation
+from wedding.models import *
+
+def gen_message(queryset, noun, pl_noun, suffix):
+	if len(queryset) == 1:
+		prefix = "1 %s was" % noun
+	else:
+		prefix = "%d %s were" % (len(queryset), pl_noun)
+	msg = prefix + " " + suffix + "."
+	return msg
 
 # Define an inline admin descriptor for UserProfile model
 class UserProfileInline(admin.StackedInline):
@@ -22,7 +30,6 @@ admin.site.register(User, UserAdmin)
 
 class InvitationGroupAdmin(admin.ModelAdmin):
 	pass
-admin.site.register(InvitationGroup, InvitationGroupAdmin)
 
 class AddressFilter(admin.SimpleListFilter):
 	title = "address"
@@ -72,4 +79,21 @@ class InvitationAdmin(admin.ModelAdmin):
 	list_filter=("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
 	search_fields = ("recipient", "email1", "email2")
 
+
+class GuestNoteAdmin(admin.ModelAdmin):
+	def approve(self, request, queryset):
+		for note in queryset:
+			note.approve()
+		msg = gen_message(queryset, "GuestNote", "GuestNotes", "approved")
+		self.message_user(request, msg)
+
+	model = GuestNote
+	list_display=("created", "from_name", "approved")
+	list_filter=("approved",)
+	search_fields = ("from_name",)
+	actions= ["approve", ]
+
+# Register all our new admin models
+admin.site.register(InvitationGroup, InvitationGroupAdmin)
 admin.site.register(Invitation, InvitationAdmin)
+admin.site.register(GuestNote, GuestNoteAdmin)

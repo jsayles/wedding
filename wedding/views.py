@@ -9,7 +9,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import timezone
 
-from wedding.models import Invitation
+from wedding.models import *
 
 def home(request):
 	return render_to_response('home.html',{'nbar':'home'}, RequestContext(request))
@@ -22,6 +22,36 @@ def reception(request):
 
 def wv_reception(request):
 	return render_to_response('wv_reception.html',{'nbar':'wv_reception'}, RequestContext(request))
+
+def registry(request):
+	return render_to_response('registry.html',{'nbar':'registry'}, RequestContext(request))
+
+def session_invitation(request):
+	invitation = None
+	if request.session.get('invitation_id', False):
+		invitation_id = request.session['invitation_id']
+		invitation = Invitation.objects.filter(pk=invitation_id).first()
+	return invitation
+	
+def whoami(request):
+	if "clear" in request.GET:
+		request.session['invitation_id'] = None
+		return HttpResponse("Cleared")
+		
+	invitation= session_invitation(request)
+	if invitation:
+		return HttpResponse(invitation.recipient)
+	return HttpResponse("Unknown")
+
+def guestbook(request):
+	if "from" in request.POST and "note" in request.POST:
+		from_name = request.POST['from'].strip()
+		note = request.POST['note'].strip()
+		GuestNote.objects.create(from_name=from_name, note=note)
+		
+	invitation = session_invitation(request)
+	guest_notes = GuestNote.objects.filter(approved=True).order_by('created')
+	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'invitation':invitation}, RequestContext(request))
 
 def rsvp(request, code=None):
 	if not code and "code" in request.POST:
@@ -37,5 +67,8 @@ def rsvp(request, code=None):
 	if not request.user.is_staff:
 		invitation.last_viewed = timezone.localtime(timezone.now())
 		invitation.save()
+
+	request.session['invitation_id'] = invitation.id
+
 	return render_to_response('rsvp.html',{'nbar':'rsvp', 'invitation':invitation}, RequestContext(request))
 

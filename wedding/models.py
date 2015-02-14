@@ -70,3 +70,13 @@ class Invitation(models.Model):
 
 	def __unicode__(self):
 		return (self.recipient)
+		
+class GuestNote(models.Model):
+	created = models.DateTimeField(auto_now_add=True)
+	from_name = models.CharField("From", max_length = 64)
+	note = models.TextField(blank=False, null=False)
+	approved = models.BooleanField(default=False)
+	
+	def approve(self):
+		self.approved = True	
+		self.save()

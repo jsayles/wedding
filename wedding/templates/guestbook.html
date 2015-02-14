@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Sign our Guestbook</h3>
+{% if invitation %}
+	<form action="{% url 'wedding.views.guestbook' %}" method="POST">
+		<div class="row ui-widget form-group">
+			<div class="col-sm-8 col-sm-offset-2">
+				<input class="form-control" id="from" name="from" value="{{ invitation.recipient}}"/>
+			</div>
+		</div>
+		<div class="row ui-widget form-group">
+			<div class="col-sm-8 col-sm-offset-2">
+				<textarea class="form-control" id="note" name="note" rows=8></textarea>
+			</div>
+		</div>
+		<div class="row ui-widget form-group">
+				<button type="submit" class="btn btn-primary">Add Comment</button>
+		</div>
+		{% csrf_token %}	
+	</form>
+{% else %}
+	<div>
+		In order to verify that you are a guest, please enter your invitation code on our <a href="{% url 'rsvp' %}">rsvp page</a>,
+		or visit the link that was emailed to you.
+	</div>
+{% endif %}
+
+<hr/>
+
+{% for entry in guest_notes %}
+	<div class="row">
+		<div class="col-md-3">
+			<strong>{{ entry.from_name }}</strong>
+		</div>
+		<div class="col-md-8">
+			<p class="text-justify">{{ entry.note }}</p>
+			<hr/>
+		</div>
+	</div>
+{% endfor %}
+
+
+
+
+{% endblock %}

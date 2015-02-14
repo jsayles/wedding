@@ -16,7 +16,7 @@
 <form action="{% url 'wedding.views.rsvp' %}" method="POST">
 	<div class="row ui-widget">
 		<div class="col-sm-3 col-sm-offset-4"><input class="form-control" id="code" name="code" placeholder="Invitation Code"/></div>
-		<div class="col-sm-1"><input class="form-control" type="submit" value="RSVP"></div>
+		<div class="col-sm-1"><button class="form-control btn btn-primary" type="submit">RSVP</button>
 	</div>
 	{% csrf_token %}
 </form>

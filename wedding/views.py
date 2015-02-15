@@ -83,18 +83,20 @@ def rsvp(request, code=None):
 	if not code and "code" in request.POST:
 		code = request.POST.get("code")
 
-	invitation = Invitation.objects.by_code(code)
-	if not invitation:
-		print code
-		if code:
+	if code:
+		invitation = Invitation.objects.by_code(code)
+		if not invitation:
 			messages.add_message(request, messages.ERROR, 'Invalid invitation code.')
-		return render_to_response('rsvp_form.html',{'nbar':'rsvp'}, RequestContext(request))
+			return render_to_response('rsvp_form.html',{'nbar':'rsvp'}, RequestContext(request))
 	
-	if not request.user.is_staff:
-		invitation.last_viewed = timezone.localtime(timezone.now())
-		invitation.save()
+		if not request.user.is_staff:
+			invitation.last_viewed = timezone.localtime(timezone.now())
+			invitation.save()
 
-	request.session['invitation_id'] = invitation.id
+		request.session['invitation_id'] = invitation.id
+	else:
+		# No Code - Check session
+		invitation = session_invitation(request)
 
 	return render_to_response('rsvp.html',{'nbar':'rsvp', 'invitation':invitation}, RequestContext(request))
 

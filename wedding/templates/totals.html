@@ -5,24 +5,37 @@
 
 <table class="table table-bordered">
 	<tr>
+		<th colspan="6"></th>
+		<th class="text-center" colspan="2">Ceremony</th>
+	</tr>
+	<tr>
 		<th class="text-center">Tier</th>
 		<th class="text-center">Invitations</th>
+		<th class="text-center">Sent</th>
+		<th class="text-center">Unsent</th>
 		<th class="text-center">Viewed</th>
 		<th class="text-center">Unviewed</th>
 		<th class="text-center">Estimated</th>
 		<th class="text-center">Confirmed</th>
 	</tr>
 
-{% for dict in invites %}
-	<tr>
-		<td>{{ dict.tier }}</td>
-		<td>{{ dict.invitations | length }}</td>
-		<td>{{ dict.viewed }}</td>
-		<td>{{ dict.unviewed }}</td>
-		<td>{{ dict.est_count }}</td>
-		<td>{{ dict.conf_count }}</td>
-	</tr>
-{% endfor %}
+	{% for dict in invites %}
+		<tr>
+			<td>{{ dict.tier }}</td>
+			<td>{{ dict.invitations | length }}</td>
+			<td>{{ dict.sent }}</td>
+			<td>{{ dict.unsent }}</td>
+			<td>{{ dict.viewed }}</td>
+			<td>{{ dict.unviewed }}</td>
+			<td>{{ dict.est_count }}</td>
+			<td>{{ dict.conf_count }}</td>
+		</tr>
+	{% endfor %}
 
+	<tr>
+		<th class="text-right" colspan="6">Total</th>
+		<th class="text-center">{{ total_est }}</th>
+		<th class="text-center">{{ total_conf }}</th>
+	</tr>
 </table>
 {% endblock %}

@@ -55,6 +55,7 @@ class Invitation(models.Model):
 	groups = models.ManyToManyField(InvitationGroup, blank=True)
 	tier = models.CharField("Tier", choices=TIER_CHOICES, max_length=1, default='4')
 	last_viewed = models.DateTimeField(blank=True, null=True, default=None)
+	sent_ts = models.DateTimeField(blank=True, null=True, default=None)
 
 	def get_code(self):
 		return short_url.encode_url(self.id)
@@ -67,6 +68,16 @@ class Invitation(models.Model):
 			else:
 				return settings.SITE_URL + "rsvp/" + code
 		return ""
+
+	def is_viewed(self):
+		if last_viewed:
+			return True
+		return False
+
+	def is_sent(self):
+		if sent_ts:
+			return True
+		return False
 
 	def __unicode__(self):
 		return (self.recipient)

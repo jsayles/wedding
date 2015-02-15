@@ -3,6 +3,26 @@
 {% block content %}
 <h1>Invitations by the Numbers</h1>
 
-{{ invitations | length }}
-<hr/>
+<table class="table table-bordered">
+	<tr>
+		<th>Tier</th>
+		<th>Invitations</th>
+		<th>Viewed</th>
+		<th>Unviewed</th>
+		<th>Estimated</th>
+		<th>Confirmed</th>
+	</tr>
+
+{% for dict in invites %}
+	<tr>
+		<td>{{ dict.tier }}</td>
+		<td>{{ dict.invitations | length }}</td>
+		<td>{{ dict.viewed }}</td>
+		<td>{{ dict.unviewed }}</td>
+		<td>{{ dict.est_count }}</td>
+		<td>{{ dict.conf_count }}</td>
+	</tr>
+{% endfor %}
+
+</table>
 {% endblock %}

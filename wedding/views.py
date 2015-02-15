@@ -30,7 +30,24 @@ def registry(request):
 
 def totals(request):
 	all_invitations = Invitation.objects.all()
-	return render_to_response('totals.html',{'invitations': all_invitations}, RequestContext(request))
+	
+	invites = []
+	for tier_id, tier in TIER_CHOICES:
+		invitations = Invitation.objects.filter(tier=tier_id)
+		est_count = 0
+		conf_count = 0
+		viewed = 0
+		unviewed = 0
+		for i in invitations:
+			est_count = est_count + i.estimated_ceremony
+			if i.rsvp_ceremony:
+				conf_count += conf_count + i.rsvp_ceremony
+			if i.last_viewed:
+				viewed = viewed + 1
+			else:
+				unviewed = unviewed + 1
+		invites.append({'tier': tier, 'invitations':invitations, 'est_count':est_count, 'conf_count':conf_count, 'viewed':viewed, 'unviewed':unviewed})
+	return render_to_response('totals.html', {'tiers':TIER_CHOICES, 'invites': invites}, RequestContext(request))
 
 def session_invitation(request):
 	invitation = None

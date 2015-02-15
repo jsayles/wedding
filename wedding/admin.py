@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.conf import settings
 
+from wedding import email
 from wedding.models import *
 
 def gen_message(queryset, noun, pl_noun, suffix):
@@ -74,10 +75,17 @@ class InvitationAdmin(admin.ModelAdmin):
 		return '<a href="%s">%s</a>' % (url, code)
 	code.allow_tags = True
 
+	def send_invitation(self, request, queryset):
+		for invite in queryset:
+			email.send_invitation(invite)
+		msg = gen_message(queryset, "Invitation", "Invitations", "sent")
+		self.message_user(request, msg)
+
 	model = Invitation
-	list_display=("recipient", address, "email1", estimated, confirmed, group, "tier", "last_viewed", code)
-	list_filter=("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
+	list_display = ("recipient", address, "email1", estimated, confirmed, group, "tier", "last_viewed", "sent_ts", code)
+	list_filter = ("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
 	search_fields = ("recipient", "email1", "email2")
+	actions = ["send_invitation", ]
 
 class GuestNoteAdmin(admin.ModelAdmin):
 	def approve(self, request, queryset):
@@ -87,10 +95,10 @@ class GuestNoteAdmin(admin.ModelAdmin):
 		self.message_user(request, msg)
 
 	model = GuestNote
-	list_display=("created", "from_name", "approved")
-	list_filter=("approved",)
+	list_display = ("created", "from_name", "approved")
+	list_filter = ("approved",)
 	search_fields = ("from_name",)
-	actions= ["approve", ]
+	actions = ["approve", ]
 
 # Register all our new admin models
 admin.site.register(InvitationGroup, InvitationGroupAdmin)

@@ -79,24 +79,48 @@ def guestbook(request):
 	guest_notes = GuestNote.objects.filter(approved=True).order_by('-created')
 	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
 
+def rsvp_save(request):
+	invitation = session_invitation(request)
+	try:
+		invitation.rsvp_ceremony = request.POST.get("rsvp_ceremony")
+		invitation.rsvp_reception = request.POST.get("rsvp_reception")
+		invitation.rsvp_wv = request.POST.get("rsvp_wv")
+		invitation.address_line1 = request.POST.get("address_line1")
+		invitation.address_line2 = request.POST.get("address_line2")
+		invitation.city = request.POST.get("city")
+		invitation.state = request.POST.get("state")
+		invitation.zip_code = request.POST.get("zip_code")
+		invitation.email1 = request.POST.get("email1")
+		invitation.email2 = request.POST.get("email2")
+		invitation.save()
+		messages.add_message(request, messages.ERROR, "Information saved")
+	except Exception as e:
+		messages.add_message(request, messages.ERROR, "Error saving: (%s)" % e)
+	return HttpResponseRedirect(reverse('wedding.views.rsvp'))
+
 def rsvp(request, code=None):
 	if not code and "code" in request.POST:
 		code = request.POST.get("code")
 
 	if code:
+		# Pull it from the database
 		invitation = Invitation.objects.by_code(code)
-		if not invitation:
-			messages.add_message(request, messages.ERROR, 'Invalid invitation code.')
-			return render_to_response('rsvp_form.html',{'nbar':'rsvp'}, RequestContext(request))
-	
+	else:
+		# No Code - Check session
+		invitation = session_invitation(request)
+
+	if invitation:
 		if not request.user.is_staff:
 			invitation.last_viewed = timezone.localtime(timezone.now())
 			invitation.save()
 
 		request.session['invitation_id'] = invitation.id
 	else:
-		# No Code - Check session
-		invitation = session_invitation(request)
+		if code:
+			# If we have code but could not find an invitation it's a bad code
+			messages.add_message(request, messages.ERROR, 'Invalid invitation code.')
+		return render_to_response('rsvp_form.html',{'nbar':'rsvp'}, RequestContext(request))
+	
 
 	return render_to_response('rsvp.html',{'nbar':'rsvp', 'invitation':invitation}, RequestContext(request))
 

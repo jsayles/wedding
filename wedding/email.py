@@ -6,6 +6,7 @@ import logging
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core import urlresolvers
 from django.views.decorators.csrf import csrf_exempt
 from django.template import Template, TemplateDoesNotExist, Context
 from django.template.loader import get_template
@@ -24,15 +25,27 @@ def get_admin_emails():
 	return emails
 
 def send_guestbook_entry(guest_note):
-	subject = "Guestbook Entry - %s" % (guest_note.from_name)
-	# TODO - Add approval URL
-	text_content = "New Guestbook Entry\n=================\n\nFrom: %s\nNote: %s\n\n" % (guest_note.from_name, guest_note.note)
+	subject = "[Wedding] Guestbook - %s" % (guest_note.from_name)
+	text_content = "New Guestbook Entry\n=================\n\nFrom: %s\nNote: %s" % (guest_note.from_name, guest_note.note)
+	text_content += "\n\n" + settings.SITE_URL[:-1] + urlresolvers.reverse('admin:wedding_guestnote_change', args=[guest_note.id])
 	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
 		"to": [get_admin_emails() ],
 		"subject": subject,
 		"text": text_content,
 	}
 	return mailgun_send_raw(mailgun_data)
+
+def send_new_rsvp(invitation):
+	subject = "[Wedding] RSVP - %s" % (invitation.recipient)
+	text_content = "New RSVP\n========\n\nRecipient: %s\nCeremony: %d\nReception: %d\nWV: %d" % (invitation.recipient, invitation.rsvp_ceremony, invitation.rsvp_reception, invitation.rsvp_wv)
+	text_content += "\n\n" + settings.SITE_URL[:-1] + urlresolvers.reverse('admin:wedding_invitation_change', args=[invitation.id])
+	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
+		"to": [get_admin_emails() ],
+		"subject": subject,
+		"text": text_content,
+	}
+	return mailgun_send_raw(mailgun_data)
+
 
 def mailgun_send(mailgun_data, files_dict=None):
 	#logger.debug("Mailgun send: %s" % mailgun_data)

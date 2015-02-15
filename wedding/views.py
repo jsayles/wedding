@@ -96,6 +96,8 @@ def rsvp_save(request):
 		messages.add_message(request, messages.ERROR, "Information saved")
 	except Exception as e:
 		messages.add_message(request, messages.ERROR, "Error saving: (%s)" % e)
+	# Let the team know we have new information
+	email.send_new_rsvp(invitation)
 	return HttpResponseRedirect(reverse('wedding.views.rsvp'))
 
 def rsvp(request, code=None):

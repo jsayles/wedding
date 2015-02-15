@@ -28,6 +28,10 @@ def wv_reception(request):
 def registry(request):
 	return render_to_response('registry.html',{'nbar':'registry'}, RequestContext(request))
 
+def totals(request):
+	all_invitations = Invitation.objects.all()
+	return render_to_response('totals.html',{'invitations': all_invitations}, RequestContext(request))
+
 def session_invitation(request):
 	invitation = None
 	if request.session.get('invitation_id', False):

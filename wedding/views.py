@@ -76,7 +76,7 @@ def guestbook(request):
 		email.send_guestbook_entry(new_note)
 		
 	invitation = session_invitation(request)
-	guest_notes = GuestNote.objects.filter(approved=True).order_by('created')
+	guest_notes = GuestNote.objects.filter(approved=True).order_by('-created')
 	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
 
 def rsvp(request, code=None):

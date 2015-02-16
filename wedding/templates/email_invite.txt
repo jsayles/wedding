@@ -20,5 +20,7 @@ sun and the Kelso folks eating barbecue in Scott Depot.
 Invitation Code: {{ invitation.get_code }}
 Invitation Link: {{ invitation.public_url }}
 
+This is your personal invitation link. Bookmark it and please don't share it.
+
 Thank you,
 Jacob and Katie

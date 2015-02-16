@@ -5,6 +5,9 @@ body {
 	background: #efeee7;
 }
 
+hr {
+	border-top: 1px solid #d1d1d1;
+}
 #content {
 	text-align: center;
 }

@@ -2,20 +2,23 @@
 
 Jacob and Katie are getting married!
 
-Join us in lovely Seattle to tie the knot and raise a glass in September of 2015.
+Join us in lovely Seattle to tie the knot and raise a glass this Labor Day Weekend, 2015.
 
-The ceremony will be on Saturday, September 5th during the afternoon on the MV Skansonia, 
-a retired ferry on Lake Union in Seattle.  The evening after the ceremony, we will host 
-a great big house party at the Purple, our home in Ballard.  It is the purple one with 
-the chickens.
+Our wedding ceremony will be on the afternoon of Saturday, September 5th aboard a retired 
+ferry boat on Lake Union named The MV Skansonia.  Saturday evening we will host a great big 
+house party at The Purple, our home in Ballard.  It is the purple one with the chickens.
+
+Our wedding ceremony will be the afternoon of Saturday, September 5th on the MV Skansonia, 
+a retired ferry on Lake Union in Seattle.  Saturday evening we will host a great big house party 
+at the Purple, our home in Ballard.  It is the purple one with the chickens.
 
 For our east cost friends and family, please join us for a reception in Bruce and Barbara 
-Davis' backyard on Saturday, September 12th for music and wild, wonderful West Virginia 
+Davis' backyard. On Saturday, September 12th we'll have music and wild, wonderful West Virginia 
 festivities.
 
 While we know the country is big, we encourage all of our friends and family to join us 
-at any or all of the celebrations.  We'd love to see the Charlestonians basking in Seattle
-sun and the Kelso folks eating barbecue in Scott Depot.
+at any or all of the celebrations.  We'd love to see the Charlestonians basking in the 
+Seattle sun and the Kelso folks eating barbecue in Scott Depot.
 
 Invitation Code: {{ invitation.get_code }}
 Invitation Link: {{ invitation.public_url }}

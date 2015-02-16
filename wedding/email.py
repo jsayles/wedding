@@ -37,7 +37,7 @@ def send_guestbook_entry(guest_note):
 
 def send_new_rsvp(invitation):
 	subject = "[Wedding] RSVP - %s" % (invitation.recipient)
-	text_content = "New RSVP\n========\n\nRecipient: %s\nCeremony: %d\nReception: %d\nWV: %d" % (invitation.recipient, invitation.rsvp_ceremony, invitation.rsvp_reception, invitation.rsvp_wv)
+	text_content = "New RSVP\n========\n\nRecipient: %s\nCeremony: %s\nReception: %s\nWV: %s" % (invitation.recipient, invitation.rsvp_ceremony, invitation.rsvp_reception, invitation.rsvp_wv)
 	text_content += "\n\n" + settings.SITE_URL + urlresolvers.reverse('admin:wedding_invitation_change', args=[invitation.id])
 	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
 		"to": [get_admin_emails() ],

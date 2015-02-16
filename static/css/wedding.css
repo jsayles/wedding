@@ -10,10 +10,10 @@ body {
 
 .carousel {
 	margin: 0 auto;
-	width: 500px;
+	width: 1024px;
 }
 .carousel-inner img {
-	width: 500px;
+	width: 1024px;
 }
 
 #skansonia_map {

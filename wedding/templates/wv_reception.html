@@ -1,9 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>West Virginia Reception</h1>
-<h3>Saturday, September 12th, 2015 at 6PM in Katie's parents' backyard</h3>
+<h1>The West Virginia Party</h1>
 
-<strong>More Soon...</strong>
+<div class="row">
+	<div class="col-sm-8 col-sm-offset-2">
+		<p class="text-justify">
+			The wild, wonderful West Virginia reception will be hosted by Bruce and Barbara Davis 
+			in their beautiful backyard the weekend following the ceremony.  Dinner, beverages and 
+			West Virginia merriment will be provided.
+		</p>
+	</div>
+</div>
+
+{% if invitation %}
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-4">
+			<p>
+				<strong>Party Details</strong>
+			</p>
+			<p class="text-left">
+				Saturday, September 12th, 2015<br/>
+				6:00 – 10:00 pm<br/>
+				The Davis Household<br/>
+				306 Beechwood Est<br/>
+				Scott Depot, WV 25560<br/>
+			</p>
+		</div>
+	</div>
+{% else %}
+	<div>
+		Please <a href="{% url 'rsvp' %}">rsvp </a> for more details.
+	</div>
+{% endif %}
+
 <hr/>
 {% endblock %}

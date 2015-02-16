@@ -1,10 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Seattle Wedding Reception</h1>
-<h3>Saturday, September 5th, 2015 at 7PM in our backyard</h3>
+<h1>The After Party</h1>
 
-<h2>RSVP at our <a href="https://www.facebook.com/events/791492707593674/">Facebook Event</a></h2>
+<div class="row">
+	<div class="col-sm-8 col-sm-offset-2">
+		<p class="text-justify">
+			The Seattle reception will follow the ceremony at The Purple, our house in Ballard from 7:30 pm 
+			until the wee hours of the night.  Merriment and beverages will be provided.  The dress code is 
+			Seattle summertime casual.  Hats encouraged.  Children and chickens welcome and adored.
+		</p>
+	</div>
+</div>
+
+{% if invitation %}
+	<div class="row">
+		<div class="col-sm-4 col-sm-offset-4">
+			<p>
+				<strong>Party Details</strong>
+			</p>
+			<p class="text-left">
+				Saturday, September 5th, 2015<br/>
+				7:00 pm – Late<br/>
+				The Purple<br/>
+				634 NW 48th St<br/>
+				Seattle, WA 98107<br/>
+			</p>
+		</div>
+	</div>
+{% else %}
+	<div>
+		Please <a href="{% url 'rsvp' %}">rsvp </a> for more details.
+	</div>
+{% endif %}
+
+<h2>More about this event on <a href="https://www.facebook.com/events/791492707593674/">Facebook</a></h2>
 
 <hr/>
 {% endblock %}

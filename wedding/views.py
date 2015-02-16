@@ -14,19 +14,24 @@ from wedding import email
 from wedding.models import *
 
 def home(request):
-	return render_to_response('home.html',{'nbar':'home'}, RequestContext(request))
+	invitation= session_invitation(request)
+	return render_to_response('home.html',{'nbar':'home', 'invitation':invitation}, RequestContext(request))
 
 def ceremony(request):
-	return render_to_response('ceremony.html',{'nbar':'ceremony'}, RequestContext(request))
+	invitation= session_invitation(request)
+	return render_to_response('ceremony.html',{'nbar':'ceremony', 'invitation':invitation}, RequestContext(request))
 
 def reception(request):
-	return render_to_response('reception.html',{'nbar':'reception'}, RequestContext(request))
+	invitation= session_invitation(request)
+	return render_to_response('reception.html',{'nbar':'reception', 'invitation':invitation}, RequestContext(request))
 
 def wv_reception(request):
-	return render_to_response('wv_reception.html',{'nbar':'wv_reception'}, RequestContext(request))
+	invitation= session_invitation(request)
+	return render_to_response('wv_reception.html',{'nbar':'wv_reception', 'invitation':invitation}, RequestContext(request))
 
 def registry(request):
-	return render_to_response('registry.html',{'nbar':'registry'}, RequestContext(request))
+	invitation= session_invitation(request)
+	return render_to_response('registry.html',{'nbar':'registry', 'invitation':invitation}, RequestContext(request))
 
 def email_invite(request):
 	invitation= session_invitation(request)

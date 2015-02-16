@@ -2,16 +2,39 @@
 
 <body style="text-align:center;">
 	
-<h1>{{ invitation.recipient }}</h1>
+<h1 style="text-align:left;">{{ invitation.recipient }}</h1>
 
-<div>
-	<a href="{{ invitation.public_url }}">Please RSVP</a>
+<h3 style="text-align:left;">Jacob and Katie are getting married!</h3>
+
+<div style="text-align:left;">
+	<p>
+		Join us in lovely Seattle to tie the knot and raise a glass in September of 2015.
+	</p>
+	<p>
+		The ceremony will be on Saturday, September 5th during the afternoon on the MV Skansonia, 
+		a retired ferry on Lake Union in Seattle.  The evening after the ceremony, we will host 
+		a great big house party at the Purple, our home in Ballard.  It is the purple one with 
+		the chickens.
+	</p>
+	<p>
+		For our east cost friends and family, please join us for a reception in Bruce and Barbara 
+		Davis' backyard on Saturday, September 12th for music and wild, wonderful West Virginia 
+		festivities.
+	</p>
+	<p>
+		While we know the country is big, we encourage all of our friends and family to join us 
+		at any or all of the celebrations.  We'd love to see the Charlestonians basking in Seattle
+		sun and the Kelso folks eating barbecue in Scott Depot.
+	</p>
+	<p>
+		Invitation Code: {{ invitation.get_code }}<br/>
+		Invitation Link: <a href="{{ invitation.public_url }}">{{ invitation.public_url }}</a>
+	</p>
+	<p>
+		Thank you,<br/>
+		Jacob and Katie
+	</p>
 </div>
-
-<div>
-	<img src="{{site_url}}/static/img/us1.jpg">
-</div>
-
 
 <img src="{{ invitation.register_open_url }}">
 </body>

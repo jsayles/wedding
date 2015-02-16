@@ -1,7 +1,8 @@
 from django.db import models
 from django.db.models import Q
-from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+from django.core import urlresolvers
 from django.conf import settings
 import short_url
 
@@ -61,19 +62,16 @@ class Invitation(models.Model):
 		return short_url.encode_url(self.id)
 	
 	def public_url(self):
-		code = self.get_code()
-		if code:
-			if settings.DEBUG:
-				return "/rsvp/" + code
-			else:
-				return settings.SITE_URL + "/rsvp/" + code
-		return ""
-
-	def register_open_url(self):
-		base = "/register_open/"
+		base = urlresolvers.reverse('rsvp', kwargs={'code': self.get_code()})
 		if not settings.DEBUG:
 			base = settings.SITE_URL + base
-		return base + self.get_code() + "/pixel.gif"
+		return base 
+
+	def register_open_url(self):
+		base = urlresolvers.reverse('register_open', kwargs={'code': self.get_code()})
+		if not settings.DEBUG:
+			base = settings.SITE_URL + base
+		return base + "pixel.gif"
 
 	def is_viewed(self):
 		if last_viewed:

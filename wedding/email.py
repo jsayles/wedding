@@ -27,7 +27,7 @@ def get_admin_emails():
 def send_guestbook_entry(guest_note):
 	subject = "[Wedding] Guestbook - %s" % (guest_note.from_name)
 	text_content = "New Guestbook Entry\n=================\n\nFrom: %s\nNote: %s" % (guest_note.from_name, guest_note.note)
-	text_content += "\n\n" + settings.SITE_URL[:-1] + urlresolvers.reverse('admin:wedding_guestnote_change', args=[guest_note.id])
+	text_content += "\n\n" + settings.SITE_URL + urlresolvers.reverse('admin:wedding_guestnote_change', args=[guest_note.id])
 	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
 		"to": [get_admin_emails() ],
 		"subject": subject,
@@ -38,7 +38,7 @@ def send_guestbook_entry(guest_note):
 def send_new_rsvp(invitation):
 	subject = "[Wedding] RSVP - %s" % (invitation.recipient)
 	text_content = "New RSVP\n========\n\nRecipient: %s\nCeremony: %d\nReception: %d\nWV: %d" % (invitation.recipient, invitation.rsvp_ceremony, invitation.rsvp_reception, invitation.rsvp_wv)
-	text_content += "\n\n" + settings.SITE_URL[:-1] + urlresolvers.reverse('admin:wedding_invitation_change', args=[invitation.id])
+	text_content += "\n\n" + settings.SITE_URL + urlresolvers.reverse('admin:wedding_invitation_change', args=[invitation.id])
 	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
 		"to": [get_admin_emails() ],
 		"subject": subject,

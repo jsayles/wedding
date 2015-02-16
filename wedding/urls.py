@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 	url(r'^rsvp/(?P<code>[0-9a-z]+)$', 'wedding.views.rsvp', name='rsvp'),
 	url(r'^rsvp/', 'wedding.views.rsvp', name='rsvp'),
 	url(r'^save/', 'wedding.views.rsvp_save', name='rsvp_save'),
+	url(r'^email/', 'wedding.views.email_invite', name='email'),
 	
 	url(r'^admin/', include(admin.site.urls)),
 )

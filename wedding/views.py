@@ -28,6 +28,17 @@ def wv_reception(request):
 def registry(request):
 	return render_to_response('registry.html',{'nbar':'registry'}, RequestContext(request))
 
+def email_invite(request):
+	invitation= session_invitation(request)
+	if not invitation:
+		return HttpResponse("Invitation Not Found")
+
+	context = RequestContext(request)
+	args = {'invitation':invitation, 'site_url':settings.SITE_URL}
+	if "text" in request.GET:
+		return render_to_response('email_invite.txt', args, context, content_type="text/plain")
+	return render_to_response('email_invite.html', args, context)
+
 def totals(request):
 	all_invitations = Invitation.objects.all()
 	

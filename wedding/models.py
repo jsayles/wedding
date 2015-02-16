@@ -66,7 +66,7 @@ class Invitation(models.Model):
 			if settings.DEBUG:
 				return "/rsvp/" + code
 			else:
-				return settings.SITE_URL + "rsvp/" + code
+				return settings.SITE_URL + "/rsvp/" + code
 		return ""
 
 	def is_viewed(self):

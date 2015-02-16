@@ -11,6 +11,9 @@ ALLOWED_HOSTS = []
 
 SITE_TITLE = "We Are Getting Married!"
 
+# Make sure there is no trailing slash on the SITE_URL
+SITE_URL = "http://wedding.com"
+
 ROOT_URLCONF = 'wedding.urls'
 
 WSGI_APPLICATION = 'wedding.wsgi.application'

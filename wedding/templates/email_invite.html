@@ -1,7 +1,18 @@
 <html>
 
-<body>
+<body style="text-align:center;">
+	
 <h1>{{ invitation.recipient }}</h1>
-<img src="{{site_url}}/static/img/us1.jpg">
+
+<div>
+	<a href="{{ invitation.public_url }}">Please RSVP</a>
+</div>
+
+<div>
+	<img src="{{site_url}}/static/img/us1.jpg">
+</div>
+
+
+<img src="{{ invitation.register_open_url }}">
 </body>
 </html>

@@ -60,7 +60,7 @@ class Invitation(models.Model):
 	def get_code(self):
 		return short_url.encode_url(self.id)
 	
-	def get_url(self):
+	def public_url(self):
 		code = self.get_code()
 		if code:
 			if settings.DEBUG:
@@ -68,6 +68,12 @@ class Invitation(models.Model):
 			else:
 				return settings.SITE_URL + "/rsvp/" + code
 		return ""
+
+	def register_open_url(self):
+		base = "/register_open/"
+		if not settings.DEBUG:
+			base = settings.SITE_URL + base
+		return base + self.get_code() + "/pixel.gif"
 
 	def is_viewed(self):
 		if last_viewed:

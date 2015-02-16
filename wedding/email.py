@@ -112,6 +112,8 @@ def mailgun_send(mailgun_data, files_dict=None):
 def mailgun_send_raw(mailgun_data, files_dict=None):
 	# Make sure nothing goes out if the system is in debug mode
 	if settings.DEBUG:
+		# If we are in DEBUG mode override the TO address
+		mailgun_data["to"] = [get_admin_emails() ]
 		if not hasattr(settings, 'MAILGUN_DEBUG') or settings.MAILGUN_DEBUG:
 			# We will see this message in the mailgun logs but nothing will actually be delivered
 			logger.debug("mailgun_send: setting testmode=yes")

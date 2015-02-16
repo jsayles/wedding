@@ -71,7 +71,7 @@ class InvitationAdmin(admin.ModelAdmin):
 
 	def code(self):
 		code = self.get_code()
-		url = self.get_url()
+		url = self.public_url()
 		return '<a href="%s">%s</a>' % (url, code)
 	code.allow_tags = True
 

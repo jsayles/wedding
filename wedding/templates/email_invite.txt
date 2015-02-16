@@ -1,3 +1,4 @@
 {{ invitation.recipient }}
 
-Text
+Invitation Code: {{ invitation.get_code }}
+Invitation Link: {{ invitation.public_url }}

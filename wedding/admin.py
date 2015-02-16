@@ -63,11 +63,12 @@ class InvitationAdmin(admin.ModelAdmin):
 		return self.rsvp_ceremony
 	
 	def group(self):
-		if not self.groups or self.groups.count() == 0:
+		groups = self.groups.all()
+		if len(groups) == 0:
 			return "None"
-		elif self.groups.count() > 1:
+		elif len(groups) > 1:
 			return "Multiple"
-		return self.groups.first().name
+		return groups[0]
 
 	def code(self):
 		code = self.get_code()

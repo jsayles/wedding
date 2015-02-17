@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
+{% block title %}The Seattle Party{% endblock %}
+
 {% block content %}
-<h1>The Seattle Party</h1>
 
 <div class="row">
 	<div class="col-sm-8 col-sm-offset-2">
@@ -10,31 +11,30 @@
 			Merriment and beverages will be provided.  The dress code is 
 			Seattle summertime casual.  Hats encouraged.  Children and chickens welcome and adored.
 		</p>
+		<p>
+			Check out our <a href="https://www.facebook.com/events/791492707593674/">Facebook event</a> for this party!
+		</p>
 	</div>
 </div>
 
-{% if invitation %}
+<h2>Party Details</h2>
+{% if not invitation %}
+	{% include "rsvp_form.html" with return="reception"%}
+{% else %}
 	<div class="row">
 		<div class="col-sm-4 col-sm-offset-4">
-			<p>
-				<strong>Party Details</strong>
-			</p>
 			<p class="text-left">
 				Saturday, September 5th, 2015<br/>
 				7:00 pm – Late<br/>
 				The Purple<br/>
 				634 NW 48th St<br/>
 				Seattle, WA 98107<br/>
+				[ <a href="http://goo.gl/maps/fawz0">Map</a> ]
 			</p>
 		</div>
 	</div>
-{% else %}
-	<div>
-		Please <a href="{% url 'rsvp' %}">rsvp </a> for more details.
-	</div>
+	<iframe width="768" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 		src="https://maps.google.com/maps?q=634+NW+48th+St,+Seattle,+WA+98107&amp;t=m&amp;z=14&amp;ll=47.663862,-122.365593&amp;output=embed">
+	</iframe>
 {% endif %}
 
-<h2>More about this event on <a href="https://www.facebook.com/events/791492707593674/">Facebook</a></h2>
-
-<hr/>
 {% endblock %}

@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Sign our Guestbook{% endblock %}
 
 {% block content %}
-<h1>Sign our Guestbook</h1>
+
 {% if new_note %}
 	<div>
 		<p>Thank you!</p>
@@ -24,10 +27,7 @@
 		{% csrf_token %}	
 	</form>
 {% else %}
-	<div>
-		In order to verify that you are a guest, please enter your invitation code on our <a href="{% url 'rsvp' %}">rsvp page</a>,
-		or visit the link that was emailed to you.
-	</div>
+	{% include "rsvp_form.html" with return="guestbook" %}
 {% endif %}
 
 <hr/>
@@ -43,8 +43,5 @@
 		</div>
 	</div>
 {% endfor %}
-
-
-
 
 {% endblock %}

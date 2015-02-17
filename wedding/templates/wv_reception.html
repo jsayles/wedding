@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
+{% block title %}The West Virginia Party{% endblock %}
+
 {% block content %}
-<h1>The West Virginia Party</h1>
 
 <div class="row">
 	<div class="col-sm-8 col-sm-offset-2">
@@ -13,26 +14,25 @@
 	</div>
 </div>
 
-{% if invitation %}
+<h2>Party Details</h2>
+{% if not invitation %}
+	{% include "rsvp_form.html" with return="wv_reception"%}
+{% else %}
 	<div class="row">
 		<div class="col-sm-4 col-sm-offset-4">
-			<p>
-				<strong>Party Details</strong>
-			</p>
 			<p class="text-left">
 				Saturday, September 12th, 2015<br/>
 				6:00 – 10:00 pm<br/>
 				The Davis Home<br/>
 				306 Beechwood Est<br/>
 				Scott Depot, WV 25560<br/>
+				[ <a href="http://goo.gl/maps/71XzX">Map</a> ]
 			</p>
 		</div>
 	</div>
-{% else %}
-	<div>
-		Please <a href="{% url 'rsvp' %}">rsvp </a> for more details.
-	</div>
+	
+	<iframe width="768" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" 		src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=306+Beechwood+Est+Scott+Depot,+WV+25560&amp;aq=&amp;sll=47.663862,-122.365593&amp;sspn=0.004567,0.010729&amp;ie=UTF8&amp;t=m&amp;z=14&amp;ll=38.444769,-81.922894&amp;output=embed">
+	</iframe>
 {% endif %}
 
-<hr/>
 {% endblock %}

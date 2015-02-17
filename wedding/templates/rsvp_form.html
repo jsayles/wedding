@@ -1,25 +1,10 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h1>RSVP</h1>
-
-{% if messages %}
-<div class="messages">
-    {% for message in messages %}
-    <div class="alert alert-info">
-    	<div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
-	</div>
-    {% endfor %}
+<div id="rsvp_form">
+	<form action="{% url 'wedding.views.rsvp' %}" method="POST">
+		<input type="hidden" name="return" value="{{ return }}">
+		<div class="row ui-widget">
+			<div class="col-sm-2 col-sm-offset-4"><input class="form-control" id="code" name="code" placeholder="Invitation Code"/></div>
+			<div class="col-sm-2"><button class="form-control btn btn-primary" type="submit">Enter</button></div>
+		</div>
+		{% csrf_token %}
+	</form>
 </div>
-{% endif %}
-
-<form action="{% url 'wedding.views.rsvp' %}" method="POST">
-	<div class="row ui-widget">
-		<div class="col-sm-3 col-sm-offset-4"><input class="form-control" id="code" name="code" placeholder="Invitation Code"/></div>
-		<div class="col-sm-1"><button class="form-control btn btn-primary" type="submit">RSVP</button></div>
-	</div>
-	{% csrf_token %}
-</form>
-
-<hr/>
-{% endblock %}

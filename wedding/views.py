@@ -44,6 +44,7 @@ def email_invite(request):
 		return render_to_response('email_invite.txt', args, context, content_type="text/plain")
 	return render_to_response('email_invite.html', args, context)
 
+@staff_member_required
 def totals(request):
 	all_invitations = Invitation.objects.all()
 	
@@ -124,7 +125,7 @@ def rsvp_save(request):
 		messages.add_message(request, messages.ERROR, "Error saving: (%s)" % e)
 	# Let the team know we have new information
 	email.send_new_rsvp(invitation)
-	return HttpResponseRedirect(reverse('wedding.views.rsvp'))
+	return HttpResponseRedirect(reverse('rsvp'))
 
 def rsvp(request, code=None):
 	if not code and "code" in request.POST:
@@ -147,10 +148,13 @@ def rsvp(request, code=None):
 		if code:
 			# If we have code but could not find an invitation it's a bad code
 			messages.add_message(request, messages.ERROR, 'Invalid invitation code.')
-		return render_to_response('rsvp_form.html',{'nbar':'rsvp'}, RequestContext(request))
-	
 
-	return render_to_response('rsvp.html',{'nbar':'rsvp', 'invitation':invitation}, RequestContext(request))
+	# If given a return, go there
+	if "return" in request.POST:
+		return_location = request.POST.get("return")
+		return HttpResponseRedirect(reverse(return_location))
+
+	return render_to_response('rsvp.html', {'nbar':'rsvp', 'invitation':invitation}, RequestContext(request))
 
 def register_open(request, code):
 	try:

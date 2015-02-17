@@ -20,10 +20,9 @@ While we know the country is big, we encourage all of our friends and family to 
 at any or all of the celebrations.  We'd love to see the Charlestonians basking in the 
 Seattle sun and the Kelso folks eating barbecue in Scott Depot.
 
-Invitation Code: {{ invitation.get_code }}
-Invitation Link: {{ invitation.public_url }}
-
-This is your personal invitation link. Bookmark it and please don't share it.
+Invitation Code:  {{ invitation.get_code }}
+Wedding Website:  http://jacobandkatiegetmarried.com
+Your Personal Invitation: {{ invitation.public_url }}
 
 Thank you,
 Jacob and Katie

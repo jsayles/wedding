@@ -28,10 +28,11 @@
 	</p>
 	<p>
 		<strong>Invitation Code:</strong> {{ invitation.get_code }}<br/>
-		<strong>Invitation Link:</strong> <a href="{{ invitation.public_url }}">{{ invitation.public_url }}</a>
+		<strong>Wedding Website:</strong> <a href="http://jacobandkatiegetmarried.com">http://jacobandkatiegetmarried.com</a><br>
+		<strong>Your Personal Invitation:</strong> <a href="{{ invitation.public_url }}">{{ invitation.public_url }}</a>
 	</p>
 	<p>
-		This is your personal invitation link. Bookmark it and please don't share it.
+		<a href="{{ invitation.public_url }}"><button style="background-color:#0061a7; border:1px solid #4e6096; border-radius:10px; padding:11px 76px; color:#ffffff; font-size:19px;">RSVP</button></a>
 	</p>
 	<p>
 		Thank you,<br/>

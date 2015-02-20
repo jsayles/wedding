@@ -54,10 +54,10 @@ class InvitationAdmin(admin.ModelAdmin):
 			return "Yes"
 		return "No";
 	
-	def estimated(self):
+	def est(self):
 		return self.estimated_ceremony
 		
-	def confirmed(self):
+	def conf(self):
 		if not self.rsvp_ceremony:
 			return ""
 		return self.rsvp_ceremony
@@ -89,7 +89,7 @@ class InvitationAdmin(admin.ModelAdmin):
 		self.message_user(request, msg)
 
 	model = Invitation
-	list_display = ("recipient", address, "email1", estimated, confirmed, group, "tier", "last_viewed", "sent_ts", code)
+	list_display = ("recipient", address, "email1", est, conf, "tier", group, "last_viewed", "sent_ts", code)
 	list_filter = ("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
 	search_fields = ("recipient", "email1", "email2")
 	actions = ["send_invitation", "send_safe_invitation"]

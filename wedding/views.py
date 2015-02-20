@@ -60,7 +60,7 @@ def totals(request):
 		for i in invitations:
 			est_count = est_count + i.estimated_ceremony
 			if i.rsvp_ceremony:
-				conf_count += conf_count + i.rsvp_ceremony
+				conf_count = conf_count + i.rsvp_ceremony
 			if i.last_viewed:
 				viewed = viewed + 1
 			else:

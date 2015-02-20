@@ -15,23 +15,23 @@ from wedding.models import *
 
 def home(request):
 	invitation= session_invitation(request)
-	return render_to_response('home.html',{'nbar':'home', 'invitation':invitation}, RequestContext(request))
+	return render_to_response('home.html',{'invitation':invitation}, RequestContext(request))
 
 def ceremony(request):
 	invitation= session_invitation(request)
-	return render_to_response('ceremony.html',{'nbar':'ceremony', 'invitation':invitation}, RequestContext(request))
+	return render_to_response('ceremony.html',{'invitation':invitation}, RequestContext(request))
 
 def reception(request):
 	invitation= session_invitation(request)
-	return render_to_response('reception.html',{'nbar':'reception', 'invitation':invitation}, RequestContext(request))
+	return render_to_response('reception.html',{'invitation':invitation}, RequestContext(request))
 
 def wv_reception(request):
 	invitation= session_invitation(request)
-	return render_to_response('wv_reception.html',{'nbar':'wv_reception', 'invitation':invitation}, RequestContext(request))
+	return render_to_response('wv_reception.html',{'invitation':invitation}, RequestContext(request))
 
 def registry(request):
 	invitation= session_invitation(request)
-	return render_to_response('registry.html',{'nbar':'registry', 'invitation':invitation}, RequestContext(request))
+	return render_to_response('registry.html',{'invitation':invitation}, RequestContext(request))
 
 def view_invite_email(request):
 	invitation = Invitation.objects.get(pk=1)
@@ -102,7 +102,7 @@ def guestbook(request):
 		
 	invitation = session_invitation(request)
 	guest_notes = GuestNote.objects.filter(approved=True).order_by('-created')
-	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
+	return render_to_response('guestbook.html',{'guest_notes':guest_notes, 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
 
 def contact(request):
 	new_note = False
@@ -113,7 +113,7 @@ def contact(request):
 		new_note = True
 		
 	invitation = session_invitation(request)
-	return render_to_response('contact.html',{'nbar':'guestbook', 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
+	return render_to_response('contact.html',{'new_note':new_note, 'invitation':invitation}, RequestContext(request))
 
 def rsvp_save(request):
 	invitation = session_invitation(request)
@@ -163,7 +163,7 @@ def rsvp(request, code=None):
 		return_location = request.POST.get("return")
 		return HttpResponseRedirect(reverse(return_location))
 
-	return render_to_response('rsvp.html', {'nbar':'rsvp', 'invitation':invitation}, RequestContext(request))
+	return render_to_response('rsvp.html', {'invitation':invitation}, RequestContext(request))
 
 def register_open(request, code):
 	try:

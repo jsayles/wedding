@@ -104,6 +104,17 @@ def guestbook(request):
 	guest_notes = GuestNote.objects.filter(approved=True).order_by('-created')
 	return render_to_response('guestbook.html',{'nbar':'guestbook', 'guest_notes':guest_notes, 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
 
+def contact(request):
+	new_note = False
+	if "from" in request.POST and "note" in request.POST:
+		from_name = request.POST['from'].strip()
+		note = request.POST['note'].strip()
+		email.send_question(from_name, note)
+		new_note = True
+		
+	invitation = session_invitation(request)
+	return render_to_response('contact.html',{'nbar':'guestbook', 'new_note':new_note, 'invitation':invitation}, RequestContext(request))
+
 def rsvp_save(request):
 	invitation = session_invitation(request)
 	try:

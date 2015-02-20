@@ -35,6 +35,18 @@ def send_guestbook_entry(guest_note):
 	}
 	return mailgun_send_raw(mailgun_data)
 
+def send_question(from_name, note):
+	subject = "[Wedding] Question - %s" % (from_name)
+	text_content = "New Question\n=================\n\nFrom: %s\nNote: %s" % (from_name, note)
+	text_content += "\n\n" + settings.SITE_URL + urlresolvers.reverse('admin:index', args=[])
+	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
+		"to": [get_admin_emails() ],
+		"subject": subject,
+		"text": text_content,
+	}
+	return mailgun_send_raw(mailgun_data)
+
+
 def send_new_rsvp(invitation):
 	subject = "[Wedding] RSVP - %s" % (invitation.recipient)
 	text_content = "New RSVP\n========\n\nRecipient: %s\nCeremony: %s\nReception: %s\nWV: %s" % (invitation.recipient, invitation.rsvp_ceremony, invitation.rsvp_reception, invitation.rsvp_wv)

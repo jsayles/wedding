@@ -12,7 +12,8 @@
 	</p>
 	<p>
 		Our wedding ceremony will be on the afternoon of Saturday, September 5th 
-		aboard a retired ferry boat on Lake Union named <a href="http://www.skansonia.com/">The MV Skansonia</a>.
+		aboard a retired ferry boat on Lake Union named 
+		{% if safe %} The MV Skansonia. {% else %} <a href="http://www.skansonia.com/">The MV Skansonia</a>. {% endif %}
 		Saturday evening we will host a great big house party at The Purple, our home in Ballard.  It is the purple one with 
 		the chickens.
 	</p>
@@ -28,18 +29,27 @@
 	</p>
 	<p>
 		<strong>Invitation Code:</strong> {{ invitation.get_code }}<br/>
-		<strong>Wedding Website:</strong> <a href="http://jacobandkatiegetmarried.com">http://jacobandkatiegetmarried.com</a><br>
-		<strong>Your Personal Invitation:</strong> <a href="{{ invitation.public_url }}">{{ invitation.public_url }}</a>
+		{% if safe %}
+			<strong>Wedding Website:</strong> jacobandkatiegetmarried.com<br>
+		{% else %}
+			<strong>Wedding Website:</strong> <a href="http://jacobandkatiegetmarried.com">http://jacobandkatiegetmarried.com</a><br>
+			<strong>Your Personal Invitation:</strong> <a href="{{ invitation.public_url }}">{{ invitation.public_url }}</a>
+		{% endif %}
 	</p>
+	{% if not safe %}
 	<p>
 		<a href="{{ invitation.public_url }}"><button style="background-color:#0061a7; border:1px solid #4e6096; border-radius:10px; padding:11px 76px; color:#ffffff; font-size:19px;">RSVP</button></a>
 	</p>
+	{% endif %}
 	<p>
 		Thank you,<br/>
 		Jacob and Katie
 	</p>
 </div>
 
+{% if not safe %}
 <img src="{{ invitation.register_open_url }}">
+{% endif %}
+
 </body>
 </html>

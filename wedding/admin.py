@@ -76,6 +76,12 @@ class InvitationAdmin(admin.ModelAdmin):
 		return '<a href="%s">%s</a>' % (url, code)
 	code.allow_tags = True
 
+	def send_safe_invitation(self, request, queryset):
+		for invite in queryset:
+			email.send_invitation(invite, safe=True)
+		msg = gen_message(queryset, "Invitation", "Invitations", "sent safely")
+		self.message_user(request, msg)
+
 	def send_invitation(self, request, queryset):
 		for invite in queryset:
 			email.send_invitation(invite)
@@ -86,7 +92,7 @@ class InvitationAdmin(admin.ModelAdmin):
 	list_display = ("recipient", address, "email1", estimated, confirmed, group, "tier", "last_viewed", "sent_ts", code)
 	list_filter = ("groups", "tier", AddressFilter, "thank_you_sent", "mail_invitation", "check_spelling")
 	search_fields = ("recipient", "email1", "email2")
-	actions = ["send_invitation", ]
+	actions = ["send_invitation", "send_safe_invitation"]
 	list_per_page = 500
 
 class GuestNoteAdmin(admin.ModelAdmin):

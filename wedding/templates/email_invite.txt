@@ -21,8 +21,8 @@ at any or all of the celebrations.  We'd love to see the Charlestonians basking 
 Seattle sun and the Kelso folks eating barbecue in Scott Depot.
 
 Invitation Code:  {{ invitation.get_code }}
-Wedding Website:  http://jacobandkatiegetmarried.com
-Your Personal Invitation: {{ invitation.public_url }}
+Wedding Website:  jacobandkatiegetmarried.com
+{% if not safe %}Your Personal Invitation: {{ invitation.public_url }}{% endif %}
 
 Thank you,
 Jacob and Katie

@@ -46,7 +46,7 @@ def send_new_rsvp(invitation):
 	}
 	return mailgun_send_raw(mailgun_data)
 
-def send_invitation(invitation):
+def send_invitation(invitation, safe=False):
 	if not invitation.email1:
 		raise MailgunException("Invitation does not have a valid email address!")
 
@@ -55,6 +55,7 @@ def send_invitation(invitation):
 		'today': timezone.localtime(timezone.now()), 
 		'invitation': invitation,
 		'site_url': settings.SITE_URL,
+		'safe': safe,
 		}) 
 	text_template = get_template("email_invite.txt")
 	text_content = text_template.render(context)

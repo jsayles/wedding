@@ -33,13 +33,11 @@ def registry(request):
 	invitation= session_invitation(request)
 	return render_to_response('registry.html',{'nbar':'registry', 'invitation':invitation}, RequestContext(request))
 
-def email_invite(request):
-	invitation= session_invitation(request)
-	if not invitation:
-		return HttpResponse("Invitation Not Found")
-
+def view_invite_email(request):
+	invitation = Invitation.objects.get(pk=1)
 	context = RequestContext(request)
-	args = {'invitation':invitation, 'site_url':settings.SITE_URL}
+	safe = "safe" in request.GET
+	args = {'invitation':invitation, 'site_url':settings.SITE_URL, 'safe':safe}
 	if "text" in request.GET:
 		return render_to_response('email_invite.txt', args, context, content_type="text/plain")
 	return render_to_response('email_invite.html', args, context)

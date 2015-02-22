@@ -33,6 +33,10 @@ def registry(request):
 	invitation= session_invitation(request)
 	return render_to_response('registry.html',{'invitation':invitation}, RequestContext(request))
 
+def hotels(request):
+	invitation= session_invitation(request)
+	return render_to_response('hotels.html',{'invitation':invitation}, RequestContext(request))
+
 def view_invite_email(request):
 	invitation = Invitation.objects.get(pk=1)
 	context = RequestContext(request)

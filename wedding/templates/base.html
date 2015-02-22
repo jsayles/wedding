@@ -60,6 +60,7 @@
 						<li class="{% block nav_registry %}{% endblock %}"><a href="{% url 'registry' %}">Registry</a></li>
 						<li class="{% block nav_guestbook %}{% endblock %}"><a href="{% url 'guestbook' %}">Guestbook</a></li>
 						<li class="{% block nav_rsvp %}{% endblock %}"><a href="{% url 'rsvp' %}">RSVP</a></li>
+						<li class="{% block nav_hotels %}{% endblock %}"><a href="{% url 'hotels' %}">Hotels</a></li>
 						<li class="{% block nav_contact %}{% endblock %}"><a href="{% url 'contact' %}">Questions?</a></li>
 						{% if request.user.is_staff %}
 						<li class="dropdown {% block nav_admin %}{% endblock %}">

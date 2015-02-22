@@ -78,13 +78,19 @@ class InvitationAdmin(admin.ModelAdmin):
 
 	def send_safe_invitation(self, request, queryset):
 		for invite in queryset:
-			email.send_invitation(invite, safe=True)
+			try:
+				email.send_invitation(invite, safe=True)
+			except Exception as e:
+				self.message_user(request, e)
 		msg = gen_message(queryset, "Invitation", "Invitations", "sent safely")
 		self.message_user(request, msg)
 
 	def send_invitation(self, request, queryset):
 		for invite in queryset:
-			email.send_invitation(invite)
+			try:
+				email.send_invitation(invite)
+			except Exception as e:
+				self.message_user(request, e)
 		msg = gen_message(queryset, "Invitation", "Invitations", "sent")
 		self.message_user(request, msg)
 

@@ -157,3 +157,10 @@ def mailgun_send_raw(mailgun_data, files_dict=None):
 	logger.debug("Mailgun response: %s" % resp.text)
 	return HttpResponse(status=200)
 
+def get_logs(email):
+	return requests.get("https://api.mailgun.net/v2/%s/messages" % settings.MAILGUN_DOMAIN,
+		auth=("api", settings.MAILGUN_API_KEY),
+		params={"ascending"   : "yes",
+					"limit"       :  25,
+					"pretty"      : "yes",
+					"recipient" : email})

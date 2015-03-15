@@ -30,6 +30,11 @@ class InvitationManager(models.Manager):
 			code = code.lower()
 		invitation_id = short_url.decode_url(code)
 		return Invitation.objects.filter(pk=invitation_id).first()
+	
+	def by_email(self, email):
+		if email:
+			email = email.lower()
+		return Invitation.objects.filter(Q(email1=email) | Q(email2=email)).first()
 
 class Invitation(models.Model):
 	objects = InvitationManager()

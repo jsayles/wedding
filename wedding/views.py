@@ -141,6 +141,11 @@ def rsvp_save(request):
 	return HttpResponseRedirect(reverse('rsvp'))
 
 def rsvp(request, code=None):
+	if "email" in request.POST:
+		email.send_code_request(request.POST.get("email"))
+		msg = "Invitation code sent.  If you can't find it, search for 'jacobandkatiegetmarried' and look in your spam folder."
+		messages.add_message(request, messages.INFO, msg)
+		
 	if not code and "code" in request.POST:
 		code = request.POST.get("code")
 

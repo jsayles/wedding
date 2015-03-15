@@ -13,6 +13,8 @@ from django.template.loader import get_template
 from django.contrib.sites.models import Site
 from django.utils import timezone
 
+from wedding.models import Invitation
+
 logger = logging.getLogger(__name__)
 
 class MailgunException(Exception):
@@ -24,6 +26,22 @@ def get_admin_emails():
 		emails.append(email)
 	return emails
 
+def send_code_request(email):
+	sent = False
+	invite = Invitation.objects.by_email(email)
+	if invite:
+		sent = send_invitation(invite)
+
+	subject = "[Wedding] Code Request - %s" % (email)
+	text_content = "Invitation Code Request\n===================\n\nEmail: %s\nSent: %s" % (email, sent)
+	text_content += "\n\n" + settings.SITE_URL + urlresolvers.reverse('admin:index', args=[])
+	mailgun_data =  {"from": settings.EMAIL_ADDRESS,
+		"to": [get_admin_emails() ],
+		"subject": subject,
+		"text": text_content,
+	}
+	mailgun_send_raw(mailgun_data)
+	
 def send_guestbook_entry(guest_note):
 	subject = "[Wedding] Guestbook - %s" % (guest_note.from_name)
 	text_content = "New Guestbook Entry\n=================\n\nFrom: %s\nNote: %s" % (guest_note.from_name, guest_note.note)

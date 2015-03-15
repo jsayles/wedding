@@ -1,8 +1,31 @@
+<script>
+	function toggleForms() {
+		$("#rsvp_form").hide();
+		$("#email_form").show();
+	}	
+	$().ready(function() {
+		$("#email_form").hide();
+	});
+</script>
+
 <div id="rsvp_form">
 	<form action="{% url 'wedding.views.rsvp' %}" method="POST">
 		<input type="hidden" name="return" value="{{ return }}">
 		<div class="row ui-widget">
 			<div class="col-sm-2 col-sm-offset-4"><input class="form-control" id="code" name="code" placeholder="Invitation Code"/></div>
+			<div class="col-sm-2"><button class="form-control btn btn-primary" type="submit">Enter</button></div>
+		</div>
+		{% csrf_token %}
+	</form>
+	<a class="get-code" id="forgot-code" href="." onclick="toggleForms(); return false;">Don't know your code?</a>
+</div>
+
+<div id="email_form">
+	<form action="{% url 'wedding.views.rsvp' %}" method="POST">
+		<input type="hidden" name="return" value="{{ return }}">
+		<div class="row ui-widget">
+			<p>Enter your email address and we'll send you your invitation code.</p>
+			<div class="col-sm-4 col-sm-offset-3"><input class="form-control" id="email" name="email" placeholder="Email Address"/></div>
 			<div class="col-sm-2"><button class="form-control btn btn-primary" type="submit">Enter</button></div>
 		</div>
 		{% csrf_token %}

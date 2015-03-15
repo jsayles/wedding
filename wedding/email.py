@@ -29,7 +29,7 @@ def get_admin_emails():
 def send_code_request(email):
 	sent = False
 	invite = Invitation.objects.by_email(email)
-	if invite:
+	if invite and invite.sent_ts:
 		sent = send_invitation(invite)
 
 	subject = "[Wedding] Code Request - %s" % (email)
@@ -63,7 +63,6 @@ def send_question(from_name, note):
 		"text": text_content,
 	}
 	return mailgun_send_raw(mailgun_data)
-
 
 def send_new_rsvp(invitation):
 	subject = "[Wedding] RSVP - %s" % (invitation.recipient)

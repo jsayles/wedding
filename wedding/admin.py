@@ -58,7 +58,7 @@ class InvitationAdmin(admin.ModelAdmin):
 		return self.estimated_ceremony
 		
 	def conf(self):
-		if not self.rsvp_ceremony:
+		if self.rsvp_ceremony == None:
 			return ""
 		return self.rsvp_ceremony
 	

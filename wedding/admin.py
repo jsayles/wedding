@@ -70,10 +70,12 @@ class InvitationAdmin(admin.ModelAdmin):
 			return "Multiple"
 		return groups[0]
 
-	def code(self):
+	def code(self, link=False):
 		code = self.get_code()
-		url = self.public_url()
-		return '<a href="%s">%s</a>' % (url, code)
+		if link:
+			url = self.public_url()
+			return '<a href="%s">%s</a>' % (url, code)
+		return code
 	code.allow_tags = True
 
 	def send_safe_invitation(self, request, queryset):

@@ -1,3 +1,6 @@
+import csv
+from datetime import date, datetime
+
 from django.conf import settings
 from django.template import RequestContext, Template
 from django.contrib.auth.models import User
@@ -77,6 +80,53 @@ def totals(request):
 		total_est = total_est + est_count
 		total_conf = total_conf + conf_count
 	return render_to_response('totals.html', {'tiers':TIER_CHOICES, 'invites': invites, 'total_est':total_est, 'total_conf':total_conf}, RequestContext(request))
+
+@staff_member_required
+def export(request):
+	invites = Invitation.objects.all()
+	header = ['recipient', 'address_line1', 'address_line2', 'city', 'state', 'zip_code',
+		'have_address', 'thank_you_sent', 'mail_invitation', 'check_spelling', 'is_viewed', 'is_sent', 'have_rsvp',
+		'email1', 'email2', 'code', 'tier', 'last_viewed', 'sent_ts', 'notes']
+
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="invitations-%s.csv"' % date.today().isoformat()
+	writer = csv.writer(response)
+
+	# Write out the header
+	writer.writerow(header)
+
+	# Write out the fields
+	for invite in invites:
+		row = []
+		row.append(invite.recipient)
+		row.append(invite.address_line1)
+		row.append(invite.address_line2)
+		row.append(invite.city)
+		row.append(invite.state)
+		row.append(invite.zip_code)
+		row.append(invite.have_address())
+		row.append(invite.thank_you_sent)
+		row.append(invite.mail_invitation)
+		row.append(invite.check_spelling)
+		row.append(invite.is_viewed())
+		row.append(invite.is_sent())
+		row.append(invite.have_rsvp())
+		row.append(invite.email1)
+		row.append(invite.email2)
+		row.append(invite.get_code())
+		row.append(invite.tier)
+		if invite.last_viewed:
+			row.append(invite.last_viewed.isoformat())
+		else:
+			row.append("")
+		if invite.sent_ts:
+			row.append(invite.sent_ts.isoformat())
+		else:
+			row.append("")
+		row.append(invite.notes)
+		writer.writerow(row)
+
+	return response
 
 def session_invitation(request):
 	invitation = None

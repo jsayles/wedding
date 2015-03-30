@@ -50,7 +50,7 @@ class AddressFilter(admin.SimpleListFilter):
 
 class InvitationAdmin(admin.ModelAdmin):
 	def address(self):
-		if self.address_line1 and self.city and self.state and self.zip_code:
+		if self.have_address():
 			return "Yes"
 		return "No";
 	

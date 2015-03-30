@@ -79,12 +79,24 @@ class Invitation(models.Model):
 		return base + "pixel.gif"
 
 	def is_viewed(self):
-		if last_viewed:
+		if self.last_viewed:
 			return True
 		return False
 
 	def is_sent(self):
-		if sent_ts:
+		if self.sent_ts:
+			return True
+		return False
+
+	def have_address(self):
+		return self.address_line1 and self.city and self.state and self.zip_code
+	
+	def have_rsvp(self):
+		if self.rsvp_ceremony != None:
+			return True
+		if self.rsvp_ceremony != None:
+			return True
+		if self.rsvp_reception != None:
 			return True
 		return False
 

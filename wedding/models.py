@@ -89,14 +89,12 @@ class Invitation(models.Model):
 		return False
 
 	def have_address(self):
-		return self.address_line1 and self.city and self.state and self.zip_code
+		if self.address_line1 and self.city and self.state and self.zip_code:
+			return True
+		return False
 	
 	def have_rsvp(self):
-		if self.rsvp_ceremony != None:
-			return True
-		if self.rsvp_ceremony != None:
-			return True
-		if self.rsvp_reception != None:
+		if self.rsvp_ceremony or self.rsvp_ceremony or self.rsvp_reception:
 			return True
 		return False
 

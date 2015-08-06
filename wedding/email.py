@@ -10,7 +10,6 @@ from django.core import urlresolvers
 from django.views.decorators.csrf import csrf_exempt
 from django.template import Template, TemplateDoesNotExist, Context
 from django.template.loader import get_template
-from django.contrib.sites.models import Site
 from django.utils import timezone
 
 from wedding.models import Invitation

@@ -53,21 +53,28 @@ def view_invite_email(request):
 def totals(request):
 	all_invitations = Invitation.objects.all()
 	
-	total_est = 0
-	total_conf = 0
+	total_est_ceremony = 0
+	total_conf_ceremony = 0
+	total_est_wv = 0
+	total_conf_wv = 0
 	invites = []
 	for tier_id, tier in TIER_CHOICES:
 		invitations = Invitation.objects.filter(tier=tier_id)
-		est_count = 0
-		conf_count = 0
+		est_ceremony = 0
+		conf_ceremony = 0
+		est_wv = 0
+		conf_wv = 0
 		viewed = 0
 		unviewed = 0
 		sent = 0
 		unsent = 0
 		for i in invitations:
-			est_count = est_count + i.estimated_ceremony
+			est_ceremony = est_ceremony + i.estimated_ceremony
+			est_wv = est_ceremony + i.estimated_wv
 			if i.rsvp_ceremony:
-				conf_count = conf_count + i.rsvp_ceremony
+				conf_ceremony = conf_ceremony + i.rsvp_ceremony
+			if i.rsvp_wv:
+				conf_wv = conf_wv + i.rsvp_wv
 			if i.last_viewed:
 				viewed = viewed + 1
 			else:
@@ -76,10 +83,14 @@ def totals(request):
 				sent = sent + 1
 			else:
 				unsent = unsent + 1
-		invites.append({'tier': tier, 'invitations':invitations, 'est_count':est_count, 'conf_count':conf_count, 'viewed':viewed, 'unviewed':unviewed, 'sent':sent, 'unsent':unsent})
-		total_est = total_est + est_count
-		total_conf = total_conf + conf_count
-	return render_to_response('totals.html', {'tiers':TIER_CHOICES, 'invites': invites, 'total_est':total_est, 'total_conf':total_conf}, RequestContext(request))
+		invites.append({'tier': tier, 'invitations':invitations, 'est_ceremony':est_ceremony, 'conf_ceremony':conf_ceremony, 'est_wv':est_wv, 'conf_wv':conf_wv, 
+			'viewed':viewed, 'unviewed':unviewed, 'sent':sent, 'unsent':unsent})
+		total_est_ceremony = total_est_ceremony + est_ceremony
+		total_conf_ceremony = total_conf_ceremony + conf_ceremony
+		total_est_wv = total_est_wv + est_wv
+		total_conf_wv = total_conf_wv + conf_wv
+	return render_to_response('totals.html', {'tiers':TIER_CHOICES, 'invites': invites, 'total_est_ceremony':total_est_ceremony, 'total_conf_ceremony':total_conf_ceremony, 
+		'total_est_wv':total_est_wv, 'total_conf_wv':total_conf_wv}, RequestContext(request))
 
 @staff_member_required
 def export(request):

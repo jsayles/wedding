@@ -1,9 +1,61 @@
 {% extends "base.html" %}
 
-{% block title %}Gifts{% endblock %}
+{% block title %}Gift Manager{% endblock %}
 {% block nav_admin %}active{% endblock %}
 
 {% block content %}
-<h1>Gifts</h1>
+
+<h3>Register Gift</h3>
+<div class="row ui-widget">
+<form action="." method="POST">
+	<div class="col-sm-4 col-sm-offset-1">
+		<select class="form-control" name="invite_id">
+			<option value="0">Select Invitation</option>
+			<hr>
+			{% for invite in no_gift %}
+				<option value="{{ invite.id }}">{{ invite.recipient }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="col-sm-4">
+		<input class="form-control" name="gift"/>
+	</div>
+	<div class="col-sm-2">
+		<input class="form-control btn btn-primary" type=submit value="Add" />
+	</div>
+	{% csrf_token %}
+</form>
+</div>
+
+<hr/>
+
+<h3>Thank You Cards Needed</h3>
+{% for invite in need_thanks %}
+	<div class="row ui-widget" style="padding: 10px;">
+		{{ invite.recipient }}<br/>
+		{{ invite.address_line1 }}<br>
+		{% if invite.address_line2 %}
+			{{ invite.address_line2 }}<br>
+		{% endif %}
+		{{ invite.city }}, {{ invite.state }} {{ invite.zip_code }}<br/>
+		<strong>Gift: {{ invite.gift }}</strong>
+		<form action="." method="POST">
+			<input type="hidden" name="invite_id" value="{{ invite.id }}" />
+			<div class="col-sm-2 col-sm-offset-5">
+				<input class="form-control btn btn-primary" type=submit value="Mark Sent" />
+			</div>
+		{% csrf_token %}
+		</form>
+	</div>
+{% endfor %}
+
+<hr/>
+
+<h3>Gifts Received</h3>
+{% for invite in has_gift %}
+	<div style="padding-bottom: 1em;">
+		{{ invite.recipient }}: <strong>{{ invite.gift }}</strong><br/>
+	</div>
+{% endfor %}
 
 {% endblock %}

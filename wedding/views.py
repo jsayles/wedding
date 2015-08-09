@@ -93,6 +93,21 @@ def totals(request):
 		'total_est_wv':total_est_wv, 'total_conf_wv':total_conf_wv}, RequestContext(request))
 
 @staff_member_required
+def gifts(request):
+	if "invite_id" in request.POST:
+		invite_id = int(request.POST['invite_id'])
+		invite = Invitation.objects.get(id=invite_id)
+		if "gift" in request.POST:
+			invite.gift = request.POST['gift'].strip()
+		else:
+			invite.thank_you_sent = True
+		invite.save()
+	no_gift = Invitation.objects.no_gift()
+	has_gift = Invitation.objects.has_gift()
+	need_thanks = has_gift.filter(thank_you_sent=False)
+	return render_to_response('gifts.html',{'no_gift':no_gift, 'has_gift':has_gift, 'need_thanks':need_thanks}, RequestContext(request))
+
+@staff_member_required
 def export(request):
 	invites = Invitation.objects.all()
 	header = ['recipient', 'address_line1', 'address_line2', 'city', 'state', 'zip_code',

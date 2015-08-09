@@ -35,6 +35,12 @@ class InvitationManager(models.Manager):
 		if email:
 			email = email.lower()
 		return Invitation.objects.filter(Q(email1=email) | Q(email2=email)).first()
+		
+	def has_gift(self):
+		return Invitation.objects.exclude(Q(gift__isnull=True) | Q(gift__exact='')).order_by('recipient')
+	
+	def no_gift(self):
+		return Invitation.objects.filter(Q(gift__isnull=True) | Q(gift__exact='')).order_by('recipient')
 
 class Invitation(models.Model):
 	objects = InvitationManager()

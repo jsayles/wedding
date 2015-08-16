@@ -57,6 +57,7 @@ def totals(request):
 	total_conf_ceremony = 0
 	total_est_wv = 0
 	total_conf_wv = 0
+	no_rsvp = 0
 	invites = []
 	for tier_id, tier in TIER_CHOICES:
 		invitations = Invitation.objects.filter(tier=tier_id)
@@ -73,6 +74,9 @@ def totals(request):
 			est_wv = est_ceremony + i.estimated_wv
 			if i.rsvp_ceremony:
 				conf_ceremony = conf_ceremony + i.rsvp_ceremony
+			elif i.rsvp_ceremony != 0:
+				conf_ceremony = conf_ceremony + i.estimated_ceremony
+				no_rsvp = no_rsvp + 1
 			if i.rsvp_wv:
 				conf_wv = conf_wv + i.rsvp_wv
 			if i.last_viewed:
@@ -89,8 +93,9 @@ def totals(request):
 		total_conf_ceremony = total_conf_ceremony + conf_ceremony
 		total_est_wv = total_est_wv + est_wv
 		total_conf_wv = total_conf_wv + conf_wv
+		no_rsvp_p = 100 * no_rsvp / all_invitations.count()
 	return render_to_response('totals.html', {'tiers':TIER_CHOICES, 'invites': invites, 'total_est_ceremony':total_est_ceremony, 'total_conf_ceremony':total_conf_ceremony, 
-		'total_est_wv':total_est_wv, 'total_conf_wv':total_conf_wv}, RequestContext(request))
+		'total_est_wv':total_est_wv, 'total_conf_wv':total_conf_wv, 'no_rsvp':no_rsvp, 'no_rsvp_p':no_rsvp_p}, RequestContext(request))
 
 @staff_member_required
 def gifts(request):

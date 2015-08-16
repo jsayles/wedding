@@ -41,9 +41,12 @@
 	<tr>
 		<th class="text-right" colspan="6">Totals</th>
 		<th class="text-center">{{ total_est_ceremony }}</th>
-		<th class="text-center">{{ total_conf_ceremony }}</th>
+		<th class="text-center">{{ total_conf_ceremony }} {% if no_rsvp %}<sup>*</sup>{% endif %}</th>
 		<th class="text-center">{{ total_est_wv }}</th>
 		<th class="text-center">{{ total_conf_wv }}</th>
 	</tr>
 </table>
+
+{% if no_rsvp %}<sup>*</sup>There are {{ no_rsvp }} invitations ({{ no_rsvp_p }}%) not yet confirmed.{% endif %}
+
 {% endblock %}

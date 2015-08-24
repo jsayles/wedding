@@ -1,9 +1,12 @@
+import time
+
 from django.conf.urls import patterns, include, url
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import admin
 
 urlpatterns = patterns('',
 	url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", content_type="text/plain")),
+	url(r'^cache\.manifest$', lambda r: HttpResponse("CACHE MANIFEST\n#Time: %s\nCACHE:\nFALLBACK:\nNETWORK:\n*" % time.time(), content_type="text/plain")),
 
 	url(r'^$', 'wedding.views.home', name='home'),
 	url(r'^ceremony/', 'wedding.views.ceremony', name='ceremony'),

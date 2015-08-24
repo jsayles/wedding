@@ -21,6 +21,7 @@ urlpatterns = patterns('',
 	url(r'^rsvp/', 'wedding.views.rsvp', name='rsvp'),
 	url(r'^save/', 'wedding.views.rsvp_save', name='rsvp_save'),
 	url(r'^email/', 'wedding.views.view_invite_email', name='email'),
+	url(r'^plan/', 'wedding.views.wedding_plan', name='plan'),
 	url(r'^register_open/(?P<code>[0-9a-z]+)/', 'wedding.views.register_open', name='register_open'),
 
 	url(r'^admin/', include(admin.site.urls)),

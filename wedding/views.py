@@ -255,6 +255,9 @@ def rsvp(request, code=None):
 
 	return render_to_response('rsvp.html', {'invitation':invitation}, RequestContext(request))
 
+def wedding_plan(request):
+	return render_to_response('wedding_plan.html', {}, RequestContext(request))
+
 def register_open(request, code):
 	try:
 		invitation = Invitation.objects.by_code(code)

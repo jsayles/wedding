@@ -90,7 +90,7 @@
 			<div id="content">
 				<h1>{% block title %}{% endblock %}</h1>
 				<!--<img style="" src="{% static 'img/line-divider.png' %}">-->
-				<img style="" src="{% static 'img/cityscape2.png' %}">
+				{% block cityscape %}<img id="cityscape" style="" src="{% static 'img/cityscape2.png' %}">{% endblock %}
 
 				{% if messages %}
 				<div class="messages">

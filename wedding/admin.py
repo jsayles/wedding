@@ -116,6 +116,10 @@ class GuestNoteAdmin(admin.ModelAdmin):
 	search_fields = ("from_name",)
 	actions = ["approve", ]
 
+class PlanTextAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(PlanText, PlanTextAdmin)
+
 # Register all our new admin models
 admin.site.register(InvitationGroup, InvitationGroupAdmin)
 admin.site.register(Invitation, InvitationAdmin)

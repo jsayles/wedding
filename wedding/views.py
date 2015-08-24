@@ -256,7 +256,8 @@ def rsvp(request, code=None):
 	return render_to_response('rsvp.html', {'invitation':invitation}, RequestContext(request))
 
 def wedding_plan(request):
-	return render_to_response('wedding_plan.html', {}, RequestContext(request))
+	plan_text = PlanText.objects.all().order_by('order')
+	return render_to_response('wedding_plan.html', {'plan_text': plan_text}, RequestContext(request))
 
 def register_open(request, code):
 	try:

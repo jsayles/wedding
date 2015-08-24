@@ -114,5 +114,14 @@ class GuestNote(models.Model):
 	approved = models.BooleanField(default=False)
 	
 	def approve(self):
-		self.approved = True	
+		self.approved = True
 		self.save()
+
+class PlanText(models.Model):
+	title = models.CharField(max_length=128)
+	template = models.TextField(blank=True, null=True)
+	slug = models.CharField(max_length=16, unique=True)
+	order = models.SmallIntegerField()
+
+	def __str__(self): return self.title
+

@@ -17,172 +17,35 @@ function toggle(detail_selector){
 }
 
 function initPage(){
-	toggle("#fri_timeline")
-	toggle("#sat_timeline")
+	{% for p in plan_text %}
+		toggle("#{{ p.slug }}");
+	{% endfor %}
 }
 $(document).ready(function() { initPage(); });
 </script>
 {% endblock %}
 
+{% block style %}
+	table td {
+		padding: 1em;
+	}
+{% endblock %}
+
 {% block content %}
 <div class="row">
-	<div class="col-sm-11 col-sm-offset-1">
-		<h3 class="text-left">
-			Timeline - Friday September 4th 
-			<a id="fri_timeline_toggle" href="." onclick="toggle('#fri_timeline'); return false;"></a>
-		</h3>
-	</div>
-	<div class="col-sm-10 col-sm-offset-2" id="fri_timeline">
-		<table class="table-bordered">
-			<tr>
-				<td>8 AM</td>
-				<td>
-					Jacob meets the rental company at Office Nomads
-				</td>
-			</tr>
-			<tr>
-				<td>9 AM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>10 AM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>11 AM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>12 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>1 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>2 PM</td>
-				<td>
-					Jonathan picks up the wine at Domanico Cellars<br>
-					and the beer at Hale's Ales
-				</td>
-			</tr>
-			<tr>
-				<td>3 PM</td>
-				<td>
-					Rehersal Aboard Skansonia
-				</td>
-			</tr>
-			<tr>
-				<td>4 PM</td>
-				<td>
-					Setup starts at Office Nomads
-				</td>
-			</tr>
-			<tr>
-				<td>5 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>6 PM</td>
-				<td>
-					Rehersal Dinner at Office Nomads
-				</td>
-			</tr>
-			<tr>
-				<td>7 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>8 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>9 PM</td>
-				<td>Clean up Office Nomads</td>
-			</tr>
-		</table>
-	</div>
-	<div class="col-sm-11 col-sm-offset-1">
-		<h3 class="text-left">
-			Timeline - Saturday September 5th 
-			<a id="sat_timeline_toggle" href="." onclick="toggle('#sat_timeline'); return false;"></a>
-		</h3>
-	</div>
-	<div class="col-sm-10 col-sm-offset-2" id="sat_timeline">
-		<table class="table-bordered">
-			<tr>
-				<td>8 AM</td>
-				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>9 AM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>10 AM</td>
-				<td>
-					Katie gets her hair done
-				</td>
-			</tr>
-			<tr>
-				<td>11 AM</td>
-				<td>
-					Setup on the Skansonia
-				</td>
-			</tr>
-			<tr>
-				<td>12 PM</td>
-				<td>Guests arrive</td>
-			</tr>
-			<tr>
-				<td>12:30 PM</td>
-				<td>Ceremony Starts</td>
-			</tr>
-			<tr>
-				<td>1 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>2 PM</td>
-				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>3 PM</td>
-				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>4 PM</td>
-				<td>
-					Band stops.  Everyone go home
-				</td>
-			</tr>
-			<tr>
-				<td>5 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>6 PM</td>
-				<td>
-					Reconvene at Katie and Jacob's house
-				</td>
-			</tr>
-			<tr>
-				<td>7 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>8 PM</td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>9 PM</td>
-				<td></td>
-			</tr>
-		</table>
-	</div>
+	{% for p in plan_text %}
+		<div class="col-sm-11 col-sm-offset-1">
+			<h3 class="text-left">
+				{{ p.title }}
+				<a id="{{p.slug}}_toggle" href="." onclick="toggle('#{{p.slug}}'); return false;"></a>
+			</h3>
+		</div>
+		<div class="col-sm-10 col-sm-offset-2" id="{{p.slug}}">
+			{% autoescape off %}
+				{{ p.template }}
+			{% endautoescape %}
+		</div>
+	{% endfor %}
+
 </div>
 {% endblock %}

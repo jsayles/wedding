@@ -15,6 +15,7 @@ from django.utils import timezone
 
 from wedding import email
 from wedding.models import *
+from wedding.forms import UploadFileForm
 
 def home(request):
 	invitation= session_invitation(request)
@@ -269,3 +270,17 @@ def register_open(request, code):
 		pass
 	TRANSPARENT_1_PIXEL_GIF = "\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00\x21\xf9\x04\x01\x00\x00\x00\x00\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01\x00\x3b"
 	return HttpResponse(TRANSPARENT_1_PIXEL_GIF, content_type='image/gif')
+
+def handle_uploaded_file(f):
+	with open('tmp/name.txt', 'wb+') as destination:
+		for chunk in f.chunks():
+			destination.write(chunk)
+
+def photos(request):
+	if request.method == 'POST':
+		form = UploadFileForm(request.POST, request.FILES)
+		if form.is_valid():
+			handle_uploaded_file(request.FILES['file'])
+			return HttpResponseRedirect('/success/url/')
+	form = UploadFileForm()
+	return render_to_response('photos.html', {'form': form}, RequestContext(request))

@@ -224,7 +224,7 @@ def rsvp_save(request):
 
 def rsvp(request, code=None):
 	if "email" in request.POST:
-		email.send_code_request(request.POST.get("email"))
+		email.send_code_request(request.POST.get("email").lower())
 		msg = "Invitation code sent.  If you can't find it, search for 'jacobandkatiegetmarried' and look in your spam folder."
 		messages.add_message(request, messages.INFO, msg)
 		
